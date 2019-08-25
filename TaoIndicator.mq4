@@ -115,8 +115,12 @@ int OnCalculate(const int rates_total,
       dSum*=dMul;
       if(dSum==0.0)
          ExtCCIBuffer[i]=0.0;
-      else
+      else {
          ExtCCIBuffer[i]=(ExtPriceBuffer[i]-ExtMovBuffer[i])/dSum;
+         if (ExtCCIBuffer[i-1] < 100 && ExtCCIBuffer[i] >= 100) {
+            Alert("Buy: ", ExtCCIBuffer[i], " at time ", time[rates_total-i-1]);
+         }
+      }
       i++;
      }
 //---
